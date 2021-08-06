@@ -26,6 +26,7 @@ const invoke = async ({
 		Payload: payload,
 	})
 	const response = await aws.send(command)
+	aws.destroy()
 	const data = JSON.parse(Buffer.from(response.Payload).toString())
 	return data
 }
