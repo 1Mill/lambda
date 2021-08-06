@@ -1,6 +1,6 @@
 {
   "name": "@1mill/lambda",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "type": "module",
   "source": "src/index.js",
@@ -8,13 +8,19 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch"
   },
   "repository": "1mill/lambda",
   "homepage": "https://github.com/1mill/lambda",
-  "author": "",
+  "authors": [
+    "Erik Ekberg <nightw0lf@hotmail.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.25.0"
