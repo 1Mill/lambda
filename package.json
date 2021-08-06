@@ -1,0 +1,19 @@
+{
+  "name": "@1mill/lambda",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "1mill/lambda",
+  "homepage": "https://github.com/1mill/lambda",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-lambda": "^3.25.0"
+  },
+  "devDependencies": {
+    "microbundle": "^0.13.3"
+  }
+}
