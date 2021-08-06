@@ -12,26 +12,22 @@ const invoke = async ({
 	// Optional for development purposes (e.g. localstack)
 	endpoint = (process && process.env && process.env.LAMBDA_AWS_ENDPOINT),
 }) => {
-	try {
-		const aws = new LambdaClient({
-			credentials: {
-				accessKeyId: accessKeyId,
-				secretAccessKey: secretAccessKey,
-			},
-			endpoint,
-			region,
-		})
-		const command = new InvokeCommand({
-			FunctionName: functionName,
-			InvocationType: invocationType,
-			Payload: payload,
-		})
-		const response = await aws.send(command)
-		const data = JSON.parse(Buffer.from(response.Payload).toString())
-		return data
-	} catch (err) {
-		return err
-	}
+	const aws = new LambdaClient({
+		credentials: {
+			accessKeyId: accessKeyId,
+			secretAccessKey: secretAccessKey,
+		},
+		endpoint,
+		region,
+	})
+	const command = new InvokeCommand({
+		FunctionName: functionName,
+		InvocationType: invocationType,
+		Payload: payload,
+	})
+	const response = await aws.send(command)
+	const data = JSON.parse(Buffer.from(response.Payload).toString())
+	return data
 }
 
 module.exports = { invoke }
