@@ -15,3 +15,7 @@ indent_style = space
 
 [*.{config,bash,bashrc,hcl,pem,sh,tfvars}]
 end_of_line = lf
+
+[{package.json,package-lock.json}]
+indent_size = 2
+indent_style = space
