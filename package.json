@@ -21,10 +21,6 @@
     "Erik Ekberg <nightw0lf@hotmail.com>"
   ],
   "license": "MIT",
-  "files": [
-    "./dist",
-    "./src"
-  ],
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.25.0"
   },
