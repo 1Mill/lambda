@@ -2,14 +2,14 @@
   "name": "@1mill/lambda",
   "version": "0.0.10",
   "description": "Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.",
-  "jsnext:main": "/dist/index.module.js",
-  "main": "./dist/index.js",
-  "module": "./dist/index.module.js",
-  "udm:main": "./dist/index.umd.js",
-  "unpkg": "./dist/index.umd.js",
-  "source": "./src/index.js",
+  "main": "dist/index.js",
+  "source": "src/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "rm -rf ./dist && microbundle",
+    "build": "rm -rf ./dist && microbundle --format cjs",
     "dev": "microbundle watch"
   },
   "repository": "1mill/lambda",
