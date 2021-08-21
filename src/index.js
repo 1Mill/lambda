@@ -1,10 +1,12 @@
 const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda')
 
+const PAYLOAD_DEFAULT = undefined
+
 const invoke = async ({
 	// Invocation
 	functionName,
 	invocationType = 'RequestResponse',
-	payload = undefined,
+	payload = PAYLOAD_DEFAULT,
 	// Credentials
 	accessKeyId = (process && process.env && process.env.LAMBDA_AWS_ACCESS_KEY_ID),
 	region = (process && process.env && process.env.LAMBDA_AWS_REGION),
@@ -12,12 +14,9 @@ const invoke = async ({
 	// Optional for development purposes (e.g. localstack)
 	endpoint = (process && process.env && process.env.LAMBDA_AWS_ENDPOINT),
 }) => {
-	if (payload !== undefined) {
-		if (typeof payload !== 'string') { throw new Error('Payload must be a string')}
-
-		try { JSON.parse(payload) }
-		catch (_err) { throw new Error('Payload must be valid JSON') }
-	}
+	if (!accessKeyId) throw new Error('Argument "accessKeyId" is required')
+	if (!secretAccessKey) throw new Error('Argument "secretAccessKey" is required')
+	if (payload !== PAYLOAD_DEFAULT) try { JSON.parse(payload) } catch (_err) { throw new Error('Argument "payload" must be valid JSON') }
 
 	const aws = new LambdaClient({
 		credentials: {
