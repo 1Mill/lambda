@@ -42,7 +42,10 @@ class Lambda {
 			Payload: JSON.stringify(cloudevent),
 		})
 		const response = await this.client.send(command)
-		const data = JSON.parse(Buffer.from(response.Payload).toString())
+
+		const data = invocationType === 'RequestResponse'
+			? JSON.parse(Buffer.from(response.Payload).toString())
+			: null
 		return data
 	}
 }
