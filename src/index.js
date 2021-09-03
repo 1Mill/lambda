@@ -5,7 +5,7 @@ const PAYLOAD_DEFAULT = undefined
 const invoke = async ({
 	// Invocation
 	functionName,
-	invocationType = 'RequestResponse',
+	invocationType = 'Event',
 	payload = PAYLOAD_DEFAULT,
 	// Credentials
 	accessKeyId = (process && process.env && process.env.LAMBDA_AWS_ACCESS_KEY_ID),
