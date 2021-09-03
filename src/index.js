@@ -1,39 +1,50 @@
 const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda')
 
-const PAYLOAD_DEFAULT = undefined
+class Lambda {
+	constructor({
+		accessKeyId = (process && process.env && process.env.LAMBDA_AWS_ACCESS_KEY_ID),
+		endpoint = (process && process.env && process.env.LAMBDA_AWS_ENDPOINT),
+		region = (process && process.env && process.env.LAMBDA_AWS_REGION),
+		secretAccessKey = (process && process.env && process.env.LAMBDA_AWS_SECRET_ACCESS_KEY),
+	}) {
+		// * Credentials
+		this.accessKeyId = accessKeyId
+		this.region = region
+		this.secretAccessKey = secretAccessKey
 
-const invoke = async ({
-	// Invocation
-	functionName,
-	invocationType = 'Event',
-	payload = PAYLOAD_DEFAULT,
-	// Credentials
-	accessKeyId = (process && process.env && process.env.LAMBDA_AWS_ACCESS_KEY_ID),
-	region = (process && process.env && process.env.LAMBDA_AWS_REGION),
-	secretAccessKey = (process && process.env && process.env.LAMBDA_AWS_SECRET_ACCESS_KEY),
-	// Optional for development purposes (e.g. localstack)
-	endpoint = (process && process.env && process.env.LAMBDA_AWS_ENDPOINT),
-}) => {
-	if (!accessKeyId) throw new Error('Argument "accessKeyId" is required')
-	if (!secretAccessKey) throw new Error('Argument "secretAccessKey" is required')
-	if (payload !== PAYLOAD_DEFAULT) try { JSON.parse(payload) } catch (_err) { throw new Error('Argument "payload" must be valid JSON') }
+		// * Optional for development purposes (e.g. localstack)
+		this.endpoint = endpoint
 
-	const aws = new LambdaClient({
-		credentials: {
-			accessKeyId: accessKeyId,
-			secretAccessKey: secretAccessKey,
-		},
-		endpoint,
-		region,
-	})
-	const command = new InvokeCommand({
-		FunctionName: functionName,
-		InvocationType: invocationType,
-		Payload: payload,
-	})
-	const response = await aws.send(command)
-	const data = JSON.parse(Buffer.from(response.Payload).toString())
-	return data
+		// * AWS connections
+		this.client = undefined
+	}
+
+	async invoke({ cloudevent, functionName, invocationType = 'Event' }) {
+		if (typeof this.client === 'undefined') {
+			this.client = new LambdaClient({
+				credentials: {
+					accessKeyId: this.accessKeyId,
+					secretAccessKey: this.secretAccessKey,
+				},
+				endpoint: this.endpoint,
+				region: this.region,
+			})
+		}
+
+		const { id, source, type } = cloudevent
+		if (!id) throw new Error('Cloudevent "id" is required')
+		if (!source) throw new Error('Cloudevent "source" is required')
+		if (!type) throw new Error('Cloudevent "type" is required')
+
+		const command = new InvokeCommand({
+			FunctionName: functionName,
+			InvocationType: invocationType,
+			Payload: JSON.stringify(cloudevent),
+		})
+		const response = await this.client.send(command)
+		const data = JSON.parse(Buffer.from(response.Payload).toString())
+		return data
+	}
 }
 
-module.exports = { invoke }
+module.exports = { Lambda }
