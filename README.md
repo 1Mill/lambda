@@ -11,13 +11,18 @@ npm install @1mill/lambda
 ```
 
 ```node
-const { invoke } = require('@1mill/lambda')
-await invoke({
+const { Lambda } = require('@1mill/lambda')
+
+const lambda = new Lambda({
   accessKeyId: process.env.LAMBDA_AWS_ACCESS_KEY_ID,
+  endpoint: process.env.LAMBDA_AWS_ENDPOINT,
+  region: process.env.LAMBDA_AWS_REGION,
   secretAccessKey: process.env.LAMBDA_AWS_SECRET_ACCESS_KEY,
-  region: 'us-east-1',
-  functionName: 'my-lambda-function-name',
-  invocationType: 'RequestResponse',
-  payload: JSON.stringify({ myValues: [1, 2, 3, 'a' ]}),
+})
+
+await invoke({
+  cloudevent,
+  functionName: 'my-lambda-arn',
+  invocationType: 'Event',
 })
 ```
