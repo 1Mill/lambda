@@ -1,11 +1,15 @@
 const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda')
 
+const fetchEnv = (name) => {
+	return process && process.env && process.env[name]
+}
+
 class Lambda {
 	constructor({
-		accessKeyId = (process && process.env && process.env.LAMBDA_AWS_ACCESS_KEY_ID),
-		endpoint = (process && process.env && process.env.LAMBDA_AWS_ENDPOINT),
-		region = (process && process.env && process.env.LAMBDA_AWS_REGION),
-		secretAccessKey = (process && process.env && process.env.LAMBDA_AWS_SECRET_ACCESS_KEY),
+		accessKeyId = fetchEnv('1MILL_LAMBDA_AWS_ACCESS_KEY_ID'),
+		endpoint = fetchEnv('1MILL_LAMBDA_AWS_ENDPOINT'),
+		region = fetchEnv('1MILL_LAMBDA_AWS_REGION'),
+		secretAccessKey = fetchEnv('1MILL_LAMBDA_AWS_SECRET_ACCESS_KEY'),
 	}) {
 		// * Credentials
 		this.accessKeyId = accessKeyId

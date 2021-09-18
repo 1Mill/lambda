@@ -14,15 +14,32 @@ npm install @1mill/lambda
 const { Lambda } = require('@1mill/lambda')
 
 const lambda = new Lambda({
-  accessKeyId: process.env.LAMBDA_AWS_ACCESS_KEY_ID,
-  endpoint: process.env.LAMBDA_AWS_ENDPOINT,
-  region: process.env.LAMBDA_AWS_REGION,
-  secretAccessKey: process.env.LAMBDA_AWS_SECRET_ACCESS_KEY,
-})
-
-await invoke({
-  cloudevent,
-  functionName: 'my-lambda-arn',
-  invocationType: 'Event',
+  accessKeyId: 'required' || process.env.1MILL_LAMBDA_AWS_ACCESS_KEY_ID,
+  endpoint: 'optional' || process.env.1MILL_LAMBDA_AWS_ENDPOINT,
+  region: 'required' || process.env.1MILL_LAMBDA_AWS_REGION,
+  secretAccessKey: 'required' || process.env.1MILL_LAMBDA_AWS_SECRET_ACCESS_KEY,
 })
 ```
+
+|                 | Required | Default                                        | Notes                                                                                  |
+|-----------------|----------|------------------------------------------------|----------------------------------------------------------------------------------------|
+| accessKeyId     | yes      | process.env.1MILL_LAMBDA_AWS_ACCESS_KEY_ID     |                                                                                        |
+| endpoint        |          | process.env.1MILL_LAMBDA_AWS_ENDPOINT          | Good for local development environment when using Localstack (or other AWS simulators) |
+| region          | yes      | process.env.1MILL_LAMBDA_AWS_REGION            |                                                                                        |
+| secretAccessKey | yes      | process.env.1MILL_LAMBDA_AWS_SECRET_ACCESS_KEY |                                                                                        |
+
+```node
+const lambda = new Lambda({...})
+
+await lambda.invoke({
+  cloudevent,
+  functionName: 'required-my-lambda-arn',
+  invocationType: 'optional' || 'Event',
+})
+```
+
+|                | Required | Default | Notes                                    |
+|----------------|----------|---------|------------------------------------------|
+| cloudevent     | yes      |         | @1mill/cloudevents                       |
+| functionname   | yes      |         |                                          |
+| invocationType |          | 'Event' | Options are 'Event' or 'RequestResponse' |
