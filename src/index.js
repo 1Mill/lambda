@@ -6,10 +6,10 @@ const fetchEnv = (name) => {
 
 class Lambda {
 	constructor({
-		accessKeyId = fetchEnv('1MILL_LAMBDA_AWS_ACCESS_KEY_ID'),
-		endpoint = fetchEnv('1MILL_LAMBDA_AWS_ENDPOINT'),
-		region = fetchEnv('1MILL_LAMBDA_AWS_REGION'),
-		secretAccessKey = fetchEnv('1MILL_LAMBDA_AWS_SECRET_ACCESS_KEY'),
+		accessKeyId = fetchEnv('MILL_LAMBDA_AWS_ACCESS_KEY_ID'),
+		endpoint = fetchEnv('MILL_LAMBDA_AWS_ENDPOINT'),
+		region = fetchEnv('MILL_LAMBDA_AWS_REGION'),
+		secretAccessKey = fetchEnv('MILL_LAMBDA_AWS_SECRET_ACCESS_KEY'),
 	}) {
 		// * Credentials
 		this.accessKeyId = accessKeyId
