@@ -50,6 +50,9 @@ class Lambda {
 		const data = invocationType === 'RequestResponse'
 			? JSON.parse(Buffer.from(response.Payload).toString())
 			: undefined
+
+		if (response.FunctionError) throw new Error(data.errorMessage)
+
 		return data
 	}
 }
