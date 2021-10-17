@@ -56,6 +56,11 @@ class Lambda {
 			try { data = JSON.parse(data) } catch (err) {}
 		}
 
+		// ! When @aws-sdk/client-lambda is used in the browser, response.FunctionError
+		// ! is not set whenever a Lambda throws an error. However, the error payload
+		// ! is still returned. This checks the payload to check if an error occured
+		// ! at the Lambda level as a workaround
+		if (data && data.errorType && data.errorType === 'InvocationException') throw new Error(data.errorMessage)
 		if (response.FunctionError) throw new Error(data.errorMessage)
 
 		return data
