@@ -1,3 +1,4 @@
+const { Cloudevent } = require('@1mill/cloudevents')
 const { Lambda } = require('./index')
 
 const lambda = new Lambda({
@@ -9,17 +10,21 @@ const lambda = new Lambda({
 
 const main = async () => {
 	try {
-		const response = await lambda.invoke({
-			cloudevent: {
-				id: 'uuid',
-				source: '1mill.lambda.unit.test.js',
-				type: 'test',
-			},
+		const cloudevent = new Cloudevent({
+			data: JSON.stringify({
+				something: 'bbb',
+			}),
+			source: '1mill.lambda.unit.test.js',
+			type: 'TEST',
+		})
+
+		const data = await lambda.invoke({
+			cloudevent,
 			functionName: 'rapids-v0-hydrator',
 			invocationType: 'RequestResponse',
 		})
 		console.log('Success ---')
-		console.log(response)
+		console.log(data)
 	} catch (err) {
 		console.log('Error ---')
 		console.error(err)
