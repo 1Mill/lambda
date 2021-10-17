@@ -49,7 +49,7 @@ class Lambda {
 
 		let data = undefined
 		if (invocationType === 'RequestResponse') {
-			// * Trun Buffer payload into string AND IF the
+			// * Turn Buffer payload into string AND IF the
 			// * string is JSON then parse the string into
 			// * an object, boolean, number, etc.
 			data = Buffer.from(response.Payload).toString()
