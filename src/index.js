@@ -47,9 +47,14 @@ class Lambda {
 		})
 		const response = await this.client.send(command)
 
-		const data = invocationType === 'RequestResponse'
-			? JSON.parse(Buffer.from(response.Payload).toString())
-			: undefined
+		let data = undefined
+		if (invocationType === 'RequestResponse') {
+			// * Trun Buffer payload into string AND IF the
+			// * string is JSON then parse the string into
+			// * an object, boolean, number, etc.
+			data = Buffer.from(response.Payload).toString()
+			try { data = JSON.parse(data) } catch (err) {}
+		}
 
 		if (response.FunctionError) throw new Error(data.errorMessage)
 
