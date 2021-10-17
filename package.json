@@ -29,6 +29,7 @@
     "@aws-sdk/client-lambda": "^3.29.0"
   },
   "devDependencies": {
+    "@1mill/cloudevents": "^3.0.0",
     "microbundle": "^0.13.3"
   }
 }
