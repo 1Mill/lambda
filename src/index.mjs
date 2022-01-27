@@ -1,7 +1,7 @@
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 
 const fetchEnv = (name) => {
-	return process && process.env && process.env[name]
+	return (typeof process !== 'undefined') && process && process.env && process.env[name]
 }
 
 export class Lambda {
