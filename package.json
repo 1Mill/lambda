@@ -3,6 +3,7 @@
   "version": "0.3.4",
   "description": "Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.",
   "source": "src/index.js",
+  "type": "module",
   "jsnext:main": "dist/index.module.js",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
