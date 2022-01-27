@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "@1mill/cloudevents": "^3.0.0",
-    "microbundle": "^0.13.3"
+    "microbundle": "^0.14.2"
   }
 }
