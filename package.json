@@ -1,18 +1,22 @@
 {
   "name": "@1mill/lambda",
-  "version": "0.3.4",
-  "description": "Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.",
+  "version": "0.4.0",
   "source": "src/index.js",
+  "type": "module",
+  "description": "Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.",
   "jsnext:main": "dist/index.module.js",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.module.js",
   "umd:main": "dist/index.umd.js",
+  "unpkg": "dist/index.umd.js",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && microbundle",
+    "build": "rm -rf ./dist && npm run build:browser && npm run build:node",
+    "build:browser": "microbundle --format modern,umd --external none",
+    "build:node": "microbundle --format cjs,esm",
     "deploy": "npm run build && npm publish",
     "dev": "microbundle watch"
   },
@@ -26,10 +30,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-lambda": "^3.45.0"
+    "@aws-sdk/client-lambda": "^3.45.0",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@1mill/cloudevents": "^3.0.0",
-    "microbundle": "^0.13.3"
+    "microbundle": "^0.14.2"
   }
 }

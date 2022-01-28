@@ -1,10 +1,9 @@
-const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda')
+import { Buffer } from 'buffer'
+import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 
-const fetchEnv = (name) => {
-	return process && process.env && process.env[name]
-}
+const fetchEnv = name => (typeof process !== 'undefined') && process && process.env && process.env[name]
 
-class Lambda {
+export class Lambda {
 	constructor({
 		accessKeyId = fetchEnv('MILL_LAMBDA_AWS_ACCESS_KEY_ID'),
 		endpoint = fetchEnv('MILL_LAMBDA_AWS_ENDPOINT'),
@@ -71,5 +70,3 @@ class Lambda {
 		return data
 	}
 }
-
-module.exports = { Lambda }
