@@ -5,7 +5,38 @@
 	<meta charset="utf-8">
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://unpkg.com/@1mill/cloudevents@4"></script>
 	<script src="./dist/index.umd.js"></script>
+
+	<script type="module">
+		const { Cloudevent } = cloudevents
+		const client = new lambda.Lambda({
+			accessKeyId: 'localstack',
+			endpoint: 'http://localhost:4566/',
+			region: 'us-east-1',
+			secretAccessKey: 'localstack',
+		})
+		const res = await client.invoke({
+			cloudevent: new Cloudevent({ id: 'test-id', source: 'test-source', type: 'test-type', data: JSON.stringify({ hello: 'world' }) }),
+			functionName: 'rapids-v0-hydrator',
+			invocationType: 'RequestResponse',
+		})
+		console.log(res)
+	</script>
+	<script>
+		const { Cloudevent } = cloudevents
+		const client = new lambda.Lambda({
+			accessKeyId: 'localstack',
+			endpoint: 'http://localhost:4566/',
+			region: 'us-east-1',
+			secretAccessKey: 'localstack',
+		})
+		client.invoke({
+			cloudevent: new Cloudevent({ id: 'test-id', source: 'test-source', type: 'test-type', data: JSON.stringify({ hello: 'world' }) }),
+			functionName: 'rapids-v0-hydrator',
+			invocationType: 'RequestResponse',
+		}).then(res => console.log(res)).catch(err => console.error(err))
+	</script>
 </head>
 
 <body>
