@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer'
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 
 const fetchEnv = (name) => {
