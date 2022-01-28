@@ -1,5 +1,7 @@
-const { Cloudevent } = require('@1mill/cloudevents')
-const { Lambda } = require('./index')
+import cloudevents from '@1mill/cloudevents'
+import { Lambda } from './src/index.js'
+
+const { Cloudevent } = cloudevents
 
 const lambda = new Lambda({
 	accessKeyId: 'localstack',
