@@ -1,17 +1,24 @@
 # lambda
 
-Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.
+Simple wrapper around the `@aws-sdk/client-lambda` library to invoke AWS Lambda functions with [Cloudevents](https://github.com/1mill/cloudevents).
 
 ## Usage
 
 ### Node
+
+```html
+<script src="https://unpkg.com/@1mill/lambda@0.4/dist/index.umd.js"></script>
+```
+
+or
 
 ```bash
 npm install @1mill/lambda
 ```
 
 ```node
-const { Lambda } = require('@1mill/lambda')
+const { Lambda } = require('@1mill/lambda') // CommonJS
+import { Lambda } from '@1mill/lambda' // EMS
 
 const lambda = new Lambda({
   accessKeyId: 'required' || process.env.MILL_LAMBDA_AWS_ACCESS_KEY_ID,
