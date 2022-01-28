@@ -1,5 +1,7 @@
 import cloudevents from '@1mill/cloudevents'
-import { Lambda } from './src/index.js'
+// import { Lambda } from './src/index.js'
+// import { Lambda } from './dist/index.cjs'
+import { Lambda } from './dist/index.module.js'
 
 const { Cloudevent } = cloudevents
 
