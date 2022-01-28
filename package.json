@@ -5,7 +5,7 @@
   "source": "src/index.js",
   "type": "module",
   "jsnext:main": "dist/index.module.js",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.module.js",
   "umd:main": "dist/index.umd.js",
   "unpkg": "dist/index.umd.js",
