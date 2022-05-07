@@ -1,6 +1,6 @@
 {
   "name": "@1mill/lambda",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "source": "src/index.js",
   "type": "module",
   "description": "Simple wrapper around the `@aws-sdk/client-lambda` to invoke a Lambda function to reduce boilerplate.",
