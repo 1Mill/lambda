@@ -6,7 +6,7 @@ const fetchNodeEnv = name => (typeof process !== 'undefined') && process && proc
 export class Lambda {
 	constructor({
 		accessKeyId = fetchNodeEnv('MILL_LAMBDA_AWS_ACCESS_KEY_ID') || fetchNodeEnv('AWS_ACCESS_KEY_ID') || fetchNodeEnv('AWS_ACCESS_KEY'),
-		endpoint = fetchNodeEnv('MILL_LAMBDA_AWS_ENDPOINT'),
+		endpoint = fetchNodeEnv('MILL_LAMBDA_AWS_ENDPOINT') || fetchNodeEnv('AWS_ENDPOINT'),
 		region = fetchNodeEnv('MILL_LAMBDA_AWS_REGION') || fetchNodeEnv('AWS_REGION'),
 		secretAccessKey = fetchNodeEnv('MILL_LAMBDA_AWS_SECRET_ACCESS_KEY') || fetchNodeEnv('AWS_SECRET_ACCESS_KEY'),
 		sessionToken = fetchNodeEnv('AWS_SESSION_TOKEN'),
