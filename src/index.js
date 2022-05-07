@@ -1,14 +1,15 @@
 import { Buffer } from 'buffer'
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 
-const fetchEnv = name => (typeof process !== 'undefined') && process && process.env && process.env[name]
+const fetchNodeEnv = name => (typeof process !== 'undefined') && process && process.env && process.env[name]
 
 export class Lambda {
 	constructor({
-		accessKeyId = fetchEnv('MILL_LAMBDA_AWS_ACCESS_KEY_ID'),
-		endpoint = fetchEnv('MILL_LAMBDA_AWS_ENDPOINT'),
-		region = fetchEnv('MILL_LAMBDA_AWS_REGION'),
-		secretAccessKey = fetchEnv('MILL_LAMBDA_AWS_SECRET_ACCESS_KEY'),
+		accessKeyId = fetchNodeEnv('MILL_LAMBDA_AWS_ACCESS_KEY_ID') || fetchNodeEnv('AWS_ACCESS_KEY_ID') || fetchNodeEnv('AWS_ACCESS_KEY'),
+		endpoint = fetchNodeEnv('MILL_LAMBDA_AWS_ENDPOINT'),
+		region = fetchNodeEnv('MILL_LAMBDA_AWS_REGION') || fetchNodeEnv('AWS_REGION'),
+		secretAccessKey = fetchNodeEnv('MILL_LAMBDA_AWS_SECRET_ACCESS_KEY') || fetchNodeEnv('AWS_SECRET_ACCESS_KEY'),
+		sessionToken = fetchNodeEnv('AWS_SESSION_TOKEN'),
 	}) {
 		// * Credentials
 		this.accessKeyId = accessKeyId
@@ -19,6 +20,8 @@ export class Lambda {
 
 		this.secretAccessKey = secretAccessKey
 		if (!this.secretAccessKey) throw new Error('AWS "secretAccessKey" is required')
+
+		this.sessionToken = sessionToken
 
 		// * Optional for development purposes (e.g. localstack)
 		this.endpoint = endpoint
@@ -33,6 +36,7 @@ export class Lambda {
 				credentials: {
 					accessKeyId: this.accessKeyId,
 					secretAccessKey: this.secretAccessKey,
+					sessionToken: this.sessionToken,
 				},
 				endpoint: this.endpoint,
 				region: this.region,
